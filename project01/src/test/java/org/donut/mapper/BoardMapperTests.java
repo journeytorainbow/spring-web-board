@@ -1,5 +1,6 @@
 package org.donut.mapper;
 
+import org.donut.domain.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.springframework.beans.factory.annotation.*;
@@ -20,5 +21,57 @@ public class BoardMapperTests {
 	@Test
 	public void testGetList() {
 		mapper.getList().forEach(board -> log.info(board));
+	}
+	
+	@Test
+	public void testInsert() {
+		
+		BoardVO board = new BoardVO();
+		board.setTitle("새 글");
+		board.setContent("새 내용");
+		board.setWriter("뉴비");
+		
+		mapper.insert(board);
+		log.info(board);
+	}
+	
+	@Test
+	public void testInsertKey() {
+		
+		BoardVO board = new BoardVO();
+		board.setTitle("새 글");
+		board.setContent("새 내용");
+		board.setWriter("뉴비");
+		
+		mapper.insertSelectKey(board);
+		log.info(board);
+	}
+	
+	@Test
+	public void testRead() {
+		
+		// 존재하는 게시물 번호로 테스트
+		BoardVO board = mapper.read(153L);
+		log.info(board);
+	}
+	
+	@Test
+	public void testDelete() {
+		
+		log.info("삭제 개수 : " + mapper.delete(153L));
+	}
+	
+	@Test
+	public void testUpdate() {
+		
+		BoardVO board = new BoardVO();
+		// 존재하는 게시물 번호로 테스트
+		board.setBno(154L);
+		board.setTitle("수정된 제목");
+		board.setContent("수정된 내용");
+		board.setWriter("testUser");
+		
+		int count = mapper.update(board);
+		log.info("수정된 개수 : " + count);
 	}
 }
