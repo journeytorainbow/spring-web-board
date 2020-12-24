@@ -42,7 +42,7 @@
                	</div>
                
                	<button data-oper="modify" class="btn btn-default">Modify</button>
-               	<button data-oper="reset" class="btn btn-default">Reset</button>
+               	<button data-oper="list" class="btn btn-default">List</button>
                 
                 <form id="operForm" action="/board/modify" method="get">
                 	<input type="hidden" id="bno" name="bno" value='<c:out value="${board.bno}"/>'>
