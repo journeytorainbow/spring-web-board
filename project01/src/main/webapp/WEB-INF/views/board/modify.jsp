@@ -39,7 +39,7 @@
                 	<div class="form-group">
                 		<label for="writer">Writer</label>
                 		<input class="form-control" name="writer"
-                		value='<c:out value="${board.content}" />' readonly="readonly">
+                		value='<c:out value="${board.writer}" />' readonly="readonly">
                 	</div>
                 	<div class="form-group">
                 		<label for="regDate">Register Date</label>
