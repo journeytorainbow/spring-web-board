@@ -40,10 +40,10 @@
                		<input class="form-control" name="writer"
                		value='<c:out value="${board.content}" />' readonly="readonly">
                	</div>
-               	<button type="modify" class="btn btn-default">
+               	<button data-oper="modify" class="btn btn-default">
                		<a href="/board/modify?bno=<c:out value="${board.bno}"/>">Modify</a>
                	</button>
-               	<button type="reset" class="btn btn-default">
+               	<button data-oper="reset" class="btn btn-default">
                		<a href="/board/list">List</a>
                	</button>
                 
