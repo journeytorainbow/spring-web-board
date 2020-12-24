@@ -20,31 +20,32 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
             
-                	<div class="form-group">
-                		<label for="bno">Bno</label>
-                		<input class="form-control" name="bno" 
-                		value='<c:out value="${board.bno}" />' readonly="readonly">
-                	</div>
-                	<div class="form-group">
-                		<label for="title">Title</label>
-                		<input class="form-control" name="title" 
-                		value='<c:out value="${board.title}" />' readonly="readonly">
-                	</div>
-                	<div class="form-group">
-                		<label for="content">Content</label>
-                		<input class="form-control" name="content"
-                		value='<c:out value="${board.content}" />' readonly="readonly">
-                	</div>
-                	<div class="form-group">
-                		<label for="writer">Writer</label>
-                		<input class="form-control" name="writer"
-                		value='<c:out value="${board.content}" />' readonly="readonly">
-                	</div>
-                	<button type="modify" class="btn btn-default">
-                		<a href="/board/modify?bno=<c:out value="${board.bno}"/>">Modify</a>
-                	</button>
-                	<button type="reset" class="btn btn-default">
-                	<a href="/board/list">List</a></button>
+               	<div class="form-group">
+               		<label for="bno">Bno</label>
+               		<input class="form-control" name="bno" 
+               		value='<c:out value="${board.bno}" />' readonly="readonly">
+               	</div>
+               	<div class="form-group">
+               		<label for="title">Title</label>
+               		<input class="form-control" name="title" 
+               		value='<c:out value="${board.title}" />' readonly="readonly">
+               	</div>
+               	<div class="form-group">
+               		<label for="content">Content</label>
+               		<input class="form-control" name="content"
+               		value='<c:out value="${board.content}" />' readonly="readonly">
+               	</div>
+               	<div class="form-group">
+               		<label for="writer">Writer</label>
+               		<input class="form-control" name="writer"
+               		value='<c:out value="${board.content}" />' readonly="readonly">
+               	</div>
+               	<button type="modify" class="btn btn-default">
+               		<a href="/board/modify?bno=<c:out value="${board.bno}"/>">Modify</a>
+               	</button>
+               	<button type="reset" class="btn btn-default">
+               		<a href="/board/list">List</a>
+               	</button>
                 
             </div>
             <!-- /.panel-body -->
