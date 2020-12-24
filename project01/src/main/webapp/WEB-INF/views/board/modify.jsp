@@ -85,6 +85,9 @@
 				// list페이지로 이동
 				self.location="/board/list";
 				return;
+				
+				// formObj.attr("action", "/board/list").attr("method", "get");
+				// formObj.empty();
 			}
 			formObj.submit(); // 직접 submit 수행
 		});
