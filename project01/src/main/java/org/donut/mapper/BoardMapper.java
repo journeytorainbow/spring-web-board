@@ -11,6 +11,8 @@ public interface BoardMapper {
 //	@Select("select * from tbl_board where bno > 0")
 	public List<BoardVO> getList();
 	
+	public List<BoardVO> getListWithPaging(Criteria cri);
+	
 	@Insert("insert into tbl_board (bno, title, content, writer) values (seq_board.nextval, #{title}, #{content}, #{writer})")
 	public void insert(BoardVO board);
 	
@@ -23,4 +25,6 @@ public interface BoardMapper {
 	public int delete(Long bno);
 	
 	public int update(BoardVO board);
+	
+	
 }

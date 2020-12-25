@@ -1,5 +1,7 @@
 package org.donut.mapper;
 
+import java.util.*;
+
 import org.donut.domain.*;
 import org.junit.*;
 import org.junit.runner.*;
@@ -73,5 +75,15 @@ public class BoardMapperTests {
 		
 		int count = mapper.update(board);
 		log.info("수정된 개수 : " + count);
+	}
+	
+	@Test
+	public void testPaging() {
+		
+		// 한 페이지에 10개씩 출력할 때, 3페이지에 들어갈 데이터 출력
+		Criteria cri = new Criteria(3, 10);
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		list.forEach(board -> log.info(board));
 	}
 }
