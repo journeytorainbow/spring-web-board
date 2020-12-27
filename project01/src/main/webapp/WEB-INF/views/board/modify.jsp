@@ -21,6 +21,8 @@
             <div class="panel-body">
             
             	<form role="form" action="/board/modify" method="post">
+            		<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
+            		<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
                 	<div class="form-group">
                 		<label for="bno">Bno</label>
                 		<input class="form-control" name="bno" 
@@ -82,12 +84,18 @@
 			if(operation === "remove") {
 				formObj.attr("action", "/board/remove");
 			} else if(operation === "list") {
-				// list페이지로 이동
-				self.location="/board/list";
-				return;
 				
-				// formObj.attr("action", "/board/list").attr("method", "get");
-				// formObj.empty();
+				// list페이지로 이동
+				// self.location="/board/list";
+				
+				formObj.attr("action", "/board/list").attr("method", "get");
+				var pageNumTag = $("input[name='pageNum']").clone(); // form 태그에서 필요한 부분만 복사해둠
+				var amountTag = $("input[name='amount']").clone();
+				
+				formObj.empty(); // form태그 내용 전부 지우기
+				formObj.append(pageNumTag); // 필요한 태그만 추가
+				formObj.append(amountTag);
+				
 			}
 			formObj.submit(); // 직접 submit 수행
 		});
