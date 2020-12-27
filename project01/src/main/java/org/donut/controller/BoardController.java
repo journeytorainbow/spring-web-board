@@ -34,7 +34,13 @@ public class BoardController {
 		
 		log.info("list");
 		model.addAttribute("list", service.getList(cri));
-		model.addAttribute("pageMaker", new PageDTO(cri, 138)); //138은 임의값
+//		model.addAttribute("pageMaker", new PageDTO(cri, 138)); //138은 임의값
+		
+		int total = service.getTotal(cri);
+		
+		log.info("total : " + total);
+		
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 	
 	@PostMapping("/register")
