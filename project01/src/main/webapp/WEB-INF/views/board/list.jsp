@@ -186,6 +186,14 @@
 				return false;
 			}
 			
+			// 검색어 공백체크
+			var pattern = /\s/g;
+			
+			if(searchForm.find("input[name='keyword']").val().match(pattern)) {
+				alert("검색어를 입력하세요!");
+				return false;
+			}
+			
 			searchForm.find("input[name='pageNum']").val("1");
 			e.preventDefault();
 			
