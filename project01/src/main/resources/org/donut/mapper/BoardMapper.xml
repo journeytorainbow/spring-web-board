@@ -10,6 +10,26 @@ select * from tbl_board where bno > 0
 ]]>
 </select>
 
+<sql id="criteria">
+	<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+		<foreach item="type" collection="typeArr">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'T'.toString()">
+						title like '%'||#{keyword}||'%'
+					</when>				
+					<when test="type == 'C'.toString()">
+						content like '%'||#{keyword}||'%'
+					</when>				
+					<when test="type == 'W'.toString()">
+						writer like '%'||#{keyword}||'%'
+					</when>				
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+	
 <select id="getListWithPaging" resultType="org.donut.domain.BoardVO">
 <![CDATA[
 select 
@@ -19,25 +39,6 @@ select
 	
 	where 
 ]]>
-	<sql id="criteria">
-		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
-			<foreach item="type" collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'T'.toString()">
-							title like '%'||#{keyword}||'%'
-						</when>				
-						<when test="type == 'C'.toString()">
-							content like '%'||#{keyword}||'%'
-						</when>				
-						<when test="type == 'W'.toString()">
-							writer like '%'||#{keyword}||'%'
-						</when>				
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-	</sql>
 	
 	<include refid="criteria"></include>
 
