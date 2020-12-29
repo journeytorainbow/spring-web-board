@@ -1,5 +1,7 @@
 package org.donut.domain;
 
+import org.springframework.web.util.*;
+
 import lombok.*;
 
 @Getter
@@ -25,5 +27,16 @@ public class Criteria {
 	public String[] getTypeArr() {
 		
 		return type == null? new String[] {} : type.split("");
+	}
+	
+	public String getListLink() {
+		
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("pageNum", this.getPageNum())
+				.queryParam("amount", this.getAmount())
+				.queryParam("type", this.getType())
+				.queryParam("keyword", this.getKeyword());
+		
+		return builder.toUriString();
 	}
 }
