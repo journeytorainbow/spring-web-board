@@ -23,6 +23,8 @@
             	<form role="form" action="/board/modify" method="post">
             		<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
             		<input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
+            		<input type="hidden" name="type" value='<c:out value="${cri.type}"/>'>
+            		<input type="hidden" name="keyword" value='<c:out value="${cri.keyword}"/>'>
                 	<div class="form-group">
                 		<label for="bno">Bno</label>
                 		<input class="form-control" name="bno" 
@@ -91,11 +93,14 @@
 				formObj.attr("action", "/board/list").attr("method", "get");
 				var pageNumTag = $("input[name='pageNum']").clone(); // form 태그에서 필요한 부분만 복사해둠
 				var amountTag = $("input[name='amount']").clone();
+				var typeTag = $("input[name='type']").clone();
+				var keywordTag = $("input[name='keyword']").clone();
 				
 				formObj.empty(); // form태그 내용 전부 지우기
 				formObj.append(pageNumTag); // 필요한 태그만 추가
 				formObj.append(amountTag);
-				
+				formObj.append(typeTag);
+				formObj.append(keywordTag);
 			}
 			formObj.submit(); // 직접 submit 수행
 		});
