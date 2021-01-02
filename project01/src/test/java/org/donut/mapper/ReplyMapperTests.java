@@ -1,5 +1,6 @@
 package org.donut.mapper;
 
+import java.util.*;
 import java.util.stream.*;
 
 import org.donut.domain.*;
@@ -76,5 +77,14 @@ public class ReplyMapperTests {
 		int count = mapper.update(vo);
 		
 		log.info("UPDATE COUNT : " + count);
+	}
+	
+	@Test
+	public void testList() {
+		
+		Criteria cri = new Criteria();
+		// 270번 게시물의 댓글들
+		List<ReplyVO> replies = mapper.getListWithPaging(cri, bnoArr[3]);
+		replies.forEach(reply -> log.info(reply));
 	}
 }
