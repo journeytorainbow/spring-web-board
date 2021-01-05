@@ -61,54 +61,125 @@
 </div>
 <!-- /.row -->
 
+<div class='row'>
+	
+	<!-- /.panel -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<i class="fa fa-comments fa-fw"></i> Reply
+		</div>
+		
+	<!-- /.panel-body -->
+	<div class="panel-body">
+		<ul class="chat">
+			<!-- start reply -->
+			<li class="left clearfix" data-rno="12">
+				<div>
+					<div class="header">
+						<strong class="primary-font">user00</strong>
+						<small class="pull-right text-muted">2020-01-05 01:01</small>
+					</div>
+					<p>Good job!</p>
+				</div>
+			</li>
+			<li class="left clearfix" data-rno="12">
+				<div>
+					<div class="header">
+						<strong class="primary-font">user01</strong>
+						<small class="pull-right text-muted">2020-01-05 01:09</small>
+					</div>
+					<p>Good job!</p>
+				</div>
+			</li>
+			<!-- end reply -->
+		</ul>
+		<!-- ./ end ul -->
+	</div>
+	<!-- /.panel.chat-panel -->
+	</div>
+</div>
+
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 
 <script>
-console.log("===============");
-console.log("JS TEST");
-
-var bnoValue = '<c:out value="${board.bno}"/>';
-
-//댓글 추가 테스트
-replyService.add(
-		{reply:"JS Test", replyer:"tester", bno:bnoValue},
-		function(result) {
-			alert("RESULT : " + result);
-		});
-
-//댓글 리스트 가져오기 테스트
-replyService.getList({bno:bnoValue, page:1}, function(list){
+$(document).ready(function() {
 	
-	for(var i = 0, len = list.length||0; i < len; i++) {
-		console.log(list[i]);	
-	}
+	var bnoValue = '<c:out value="${board.bno}"/>';
+	var replyUL = $(".chat");
+	
+	showList(1);
+	
+	function showList(page) {
+		
+		replyService.getList({bno:bnoValue, page:page || 1}, function(list) {
+			
+			var str = "";
+			if(list == null || list.length == 0) {
+				
+				replyUL.html("");
+				return;
+			}
+			
+			for (var i = 0, len = list.length || 0; i < len; i++) {
+				
+				str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
+				str += "	<div><div class='header'><strong class='primary-font'>" + list[i].replyer + "</strong>";
+				str += "		<small class='pull-right text-muted'>" + list[i].replyDate + "</small></div>";
+				str += "			<p>" + list[i].reply + "</p></div></li>";
+			}
+			
+			replyUL.html(str);
+		}); //end function
+	} //end showList
 });
+</script>
 
-// 86번 댓글 삭제 테스트
-replyService.remove(86, function(count){
+<script>
+// console.log("===============");
+// console.log("JS TEST");
 
-	console.log(count);
+// var bnoValue = '<c:out value="${board.bno}"/>';
 
-	if (count == "success") {
-		alert("댓글이 삭제되었습니다.");
-	}
-}, function(err) {
-	alert("댓글 삭제 실패!");
-});
+// //댓글 추가 테스트
+// replyService.add(
+// 		{reply:"JS Test", replyer:"tester", bno:bnoValue},
+// 		function(result) {
+// 			alert("RESULT : " + result);
+// 		});
 
-// 87번 댓글 수정 테스트
-replyService.update({
-	rno : 87,
-	bno : bnoValue,
-	reply : "2차 수정된 댓글 내용"
-}, function(result) {
-	alert("수정 완료");
-});
+// //댓글 리스트 가져오기 테스트
+// replyService.getList({bno:bnoValue, page:1}, function(list){
+	
+// 	for(var i = 0, len = list.length||0; i < len; i++) {
+// 		console.log(list[i]);	
+// 	}
+// });
 
-// 특정 번호(87)의 댓글 조회
-replyService.get(87, function(data){
-	console.log(data);
-});
+// // 86번 댓글 삭제 테스트
+// replyService.remove(86, function(count){
+
+// 	console.log(count);
+
+// 	if (count == "success") {
+// 		alert("댓글이 삭제되었습니다.");
+// 	}
+// }, function(err) {
+// 	alert("댓글 삭제 실패!");
+// });
+
+// // 87번 댓글 수정 테스트
+// replyService.update({
+// 	rno : 87,
+// 	bno : bnoValue,
+// 	reply : "2차 수정된 댓글 내용"
+// }, function(result) {
+// 	alert("수정 완료");
+// });
+
+// // 특정 번호(87)의 댓글 조회
+// replyService.get(87, function(data){
+// 	console.log(data);
+// });
 </script>
 
 <script type="text/javascript">
