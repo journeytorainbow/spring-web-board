@@ -206,6 +206,13 @@ $(document).ready(function() {
 			showList(1);
 		});
 	});
+
+	$(".chat").on("click", "li", function(e) {
+
+		var rno = $(this).data("rno");
+
+		console.log(rno);
+	});
 });
 </script>
 
