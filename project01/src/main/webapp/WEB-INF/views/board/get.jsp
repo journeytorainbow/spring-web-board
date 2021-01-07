@@ -121,7 +121,7 @@
             	</div>
             	<div class="form-group">
             		<label>Reply Date</label>
-            		<input class="form-control" name="replyDate" value="">
+            		<input class="form-control" name="replyDate" value="2018-01-01 13:13">
             	</div>
             </div>
             <div class="modal-footer">
@@ -211,7 +211,20 @@ $(document).ready(function() {
 
 		var rno = $(this).data("rno");
 
-		console.log(rno);
+		replyService.get(rno, function(result) {
+			modalInputReply.val(result.reply);
+			modalInputReplyer.val(result.replyer);
+			modalInputReplyDate.val(replyService.displayTime(result.replyDate))
+			.attr("readonly", "readonly");
+			modal.data("rno", result.rno);
+
+			modal.find("button[id != 'modalCloseBtn']").hide();
+			modalModBtn.show();
+			modalRemoveBtn.show();
+			
+			console.log(rno);
+			$(".modal").modal("show");
+		});
 	});
 });
 </script>
