@@ -82,9 +82,9 @@ public class ReplyMapperTests {
 	@Test
 	public void testList() {
 		
-		Criteria cri = new Criteria();
-		// 270번 게시물의 댓글들
-		List<ReplyVO> replies = mapper.getListWithPaging(cri, bnoArr[3]);
+		Criteria cri = new Criteria(2, 10);
+		// 271번 게시물의 댓글들
+		List<ReplyVO> replies = mapper.getListWithPaging(cri, 271L);
 		replies.forEach(reply -> log.info(reply));
 	}
 }
