@@ -81,7 +81,7 @@ var replyService = (function() {
 			if (callback) {
 				callback(result);
 			}
-		}).fail(function (xhr, status, err){
+		}, "json").fail(function (xhr, status, err){
 			if(err) {
 				error();
 			}
