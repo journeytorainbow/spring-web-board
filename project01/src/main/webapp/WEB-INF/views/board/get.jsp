@@ -167,6 +167,12 @@ $(document).ready(function() {
 			if(list == null || list.length == 0) {
 				
 				replyUL.html("");
+				if(page > 1) {
+					pageNum = page - 1;
+					showList(pageNum);
+				} else {
+					replyPageFooter.html("");
+				}
 				return;
 			}
 			
