@@ -51,4 +51,12 @@ public class RelyServiceImpl implements ReplyService {
 		log.info("get Reply List of Board " + bno);
 		return mapper.getListWithPaging(cri, bno);
 	}
+	
+	@Override
+	public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+		
+		return new ReplyPageDTO(
+				mapper.getCountByBno(bno),
+				mapper.getListWithPaging(cri, bno));
+	}
 }
