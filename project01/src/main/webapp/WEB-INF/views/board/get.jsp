@@ -145,15 +145,23 @@ $(document).ready(function() {
 	
 	var bnoValue = '<c:out value="${board.bno}"/>';
 	var replyUL = $(".chat");
-	
-	showList(1);
+
+	function savePresentPage(page) {
+		sessionStorage.setItem("presentpage", page);
+	}
+
+	var ajaxCallingKey = sessionStorage.getItem("presentpage");
+
+	showList(ajaxCallingKey || 1);
 	
 	function showList(page) {
 		
 		console.log("show list : " + page);
-
+		console.log("show ajaxCaliingKey : " + ajaxCallingKey);
+		
 		replyService.getList({bno:bnoValue, page:page || 1}, function(replyCnt, list) {
 			
+			console.log("page : " + page);
 			console.log("replyCnt : " + replyCnt);
 			console.log("list : " + list);
 
@@ -190,7 +198,7 @@ $(document).ready(function() {
 		}); //end function
 	} //end showList
 	
-	var pageNum = 1;
+	var pageNum = ajaxCallingKey || 1;
 	var replyPageFooter = $(".panel-footer");
 	
 	function showReplyPageList(replyCnt) {
@@ -244,8 +252,10 @@ $(document).ready(function() {
        
        pageNum = targetPageNum;
        
-       showList(pageNum);
-     });
+	   showList(pageNum);
+	   
+	   savePresentPage(pageNum);
+	});
 
 	var modal = $(".modal");
 	var modalInputReply = modal.find("input[name='reply']");
@@ -287,6 +297,8 @@ $(document).ready(function() {
 
 			// showList(1);
 			showList(-1);
+
+			savePresentPage(-1);
 		});
 	});
 
