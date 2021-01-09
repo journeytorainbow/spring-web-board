@@ -20,23 +20,24 @@ import oracle.jdbc.proxy.annotation.*;
 @AllArgsConstructor
 public class BoardController {
 	
-	private BoardService service;
+	private BoardService boardService;
+	private ReplyService replyService;
 	
 //	@GetMapping("/list")
 //	public void list(Model model) {
 //		
 //		log.info("list");
-//		model.addAttribute("list", service.getList());
+//		model.addAttribute("list", Service.getList());
 //	}
 	
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		
 		log.info("list");
-		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("list", boardService.getList(cri));
 //		model.addAttribute("pageMaker", new PageDTO(cri, 138)); //138은 임의값
 		
-		int total = service.getTotal(cri);
+		int total = boardService.getTotal(cri);
 		
 		log.info("total : " + total);
 		
@@ -48,7 +49,7 @@ public class BoardController {
 	
 		log.info("register : " + board);
 		
-		service.register(board);
+		boardService.register(board);
 		
 		rttr.addFlashAttribute("result", board.getBno());
 		
@@ -64,7 +65,7 @@ public class BoardController {
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
 		
 		log.info("/get or /modify");
-		model.addAttribute("board", service.get(bno));
+		model.addAttribute("board", boardService.get(bno));
 	}
 	
 	@PostMapping("/modify")
@@ -72,7 +73,7 @@ public class BoardController {
 		
 		log.info("modify : " + board);
 		
-		if (service.modify(board)) {
+		if (boardService.modify(board)) {
 			
 			rttr.addFlashAttribute("result", "success");
 		}
@@ -89,9 +90,11 @@ public class BoardController {
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		
+		log.info("remove bno's all replies...");
 		log.info("remove..." + bno);
+		replyService.removeAll(bno);
 		
-		if(service.remove(bno)) {
+		if(boardService.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
 		}
 		

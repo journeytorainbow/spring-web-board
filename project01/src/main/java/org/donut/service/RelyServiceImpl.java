@@ -59,4 +59,11 @@ public class RelyServiceImpl implements ReplyService {
 				mapper.getCountByBno(bno),
 				mapper.getListWithPaging(cri, bno));
 	}
+	
+	@Override
+	public int removeAll(Long bno) {
+		
+		log.info("remove all replies in specific bno..." + bno);
+		return mapper.deleteAll(bno);
+	}
 }
