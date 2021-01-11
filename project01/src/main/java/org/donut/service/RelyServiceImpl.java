@@ -5,6 +5,7 @@ import java.util.*;
 import org.donut.domain.*;
 import org.donut.mapper.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import lombok.*;
 import lombok.extern.log4j.*;
@@ -16,11 +17,15 @@ public class RelyServiceImpl implements ReplyService {
 	
 //	@Setter(onMethod_ = @Autowired)
 	private ReplyMapper mapper;
-
+	
+	private BoardMapper boardMapper;
+	
+	@Transactional
 	@Override
 	public int register(ReplyVO vo) {
 		
 		log.info("register...." + vo);
+		boardMapper.updateReplyCnt(vo.getBno(), 1);
 		return mapper.insert(vo);
 	}
 
@@ -37,11 +42,15 @@ public class RelyServiceImpl implements ReplyService {
 		log.info("modify...." + vo);
 		return mapper.update(vo);
 	}
-
+	
+	@Transactional
 	@Override
 	public int remove(Long rno) {
 		
 		log.info("remove...." + rno);
+		ReplyVO vo = mapper.read(rno);
+		
+		boardMapper.updateReplyCnt(vo.getBno(), -1);
 		return mapper.delete(rno);
 	}
 
