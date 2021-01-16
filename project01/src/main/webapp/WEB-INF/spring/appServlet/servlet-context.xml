@@ -22,6 +22,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="org.donut.controller" />
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 	
 	
 	
