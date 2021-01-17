@@ -144,7 +144,7 @@ $(document).ready(function(e) {
             str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" +jobj.data("type") + "'>";
         });
 
-        formObj.html(str).submit();
+        formObj.append(str).submit();
     });
 
     var regex = new RegExp("(.*)\.(exe|sh|zip|alz)$");
