@@ -6,6 +6,7 @@ import java.util.*;
 import org.donut.domain.*;
 import org.donut.mapper.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import lombok.*;
 import lombok.extern.log4j.*;
@@ -16,12 +17,26 @@ import lombok.extern.log4j.*;
 public class BoardServiceImpl implements BoardService {
 	
 	private BoardMapper mapper;
-
+	
+	private BoardAttachMapper attachMapper;
+	
+	@Transactional
 	@Override
 	public void register(BoardVO board) {
 		
 		log.info("register...." + board);
+		
 		mapper.insertSelectKey(board);
+		
+		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
+			return;
+		}
+		
+		board.getAttachList().forEach(attach -> {
+			
+			attach.setBno(board.getBno());
+			attachMapper.insert(attach);
+		});
 	}
 
 	@Override
