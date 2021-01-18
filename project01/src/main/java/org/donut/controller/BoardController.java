@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.donut.domain.*;
 import org.donut.service.*;
+import org.springframework.http.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -112,5 +113,14 @@ public class BoardController {
 		rttr.addAttribute("keyword", cri.getKeyword());
 		
 		return "redirect:/board/list";
+	}
+	
+	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno) {
+		
+		log.info("getAttachList : " + bno);
+		
+		return new ResponseEntity<>(boardService.getAttachList(bno), HttpStatus.OK);
 	}
 }
