@@ -1,6 +1,7 @@
 package org.donut.controller;
 
 import java.lang.ProcessBuilder.*;
+import java.nio.file.*;
 import java.util.*;
 
 import org.donut.domain.*;
@@ -103,7 +104,11 @@ public class BoardController {
 		log.info("remove..." + bno);
 		replyService.removeAll(bno);
 		
+		List<BoardAttachVO> attachList = boardService.getAttachList(bno); // DB에서 첨부 파일 정보 삭제
+		
 		if(boardService.remove(bno)) {
+			
+			deleteFiles(attachList); // 실제 첨부 파일 삭제
 			rttr.addFlashAttribute("result", "success");
 		}
 		
@@ -122,5 +127,33 @@ public class BoardController {
 		log.info("getAttachList : " + bno);
 		
 		return new ResponseEntity<>(boardService.getAttachList(bno), HttpStatus.OK);
+	}
+	
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		
+		if (attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		log.info("==== delete attached files =====");
+		log.info("attachList : " + attachList);
+		
+		attachList.forEach(attach -> {
+			try {
+				Path file = Paths.get("C:\\uploadfiles\\" + attach.getUploadPath() + "\\" + attach.getUuid() + "_" + attach.getFileName());
+				
+				Files.deleteIfExists(file);
+				
+				if (Files.probeContentType(file).startsWith("image")) {
+					
+					Path thumbNail = Paths.get("C:\\uploadfiles\\" + attach.getUploadPath() + "\\s_" + attach.getUuid() + "_" + attach.getFileName());
+					
+					Files.delete(thumbNail);
+				}
+			} catch (Exception e) {
+				
+				log.error("delete file error : " + e.getMessage());
+			} // end catch
+		}); // end foreach
 	}
 }
