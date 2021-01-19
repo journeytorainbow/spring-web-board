@@ -102,7 +102,6 @@ public class BoardController {
 		
 		log.info("remove bno's all replies...");
 		log.info("remove..." + bno);
-		replyService.removeAll(bno);
 		
 		List<BoardAttachVO> attachList = boardService.getAttachList(bno); // DB에서 첨부 파일 정보 삭제
 		

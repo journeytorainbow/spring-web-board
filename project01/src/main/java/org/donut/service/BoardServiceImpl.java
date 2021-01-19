@@ -20,6 +20,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	private BoardAttachMapper attachMapper;
 	
+	private ReplyMapper replyMapper;
+	
 	@Transactional
 	@Override
 	public void register(BoardVO board) {
@@ -58,7 +60,9 @@ public class BoardServiceImpl implements BoardService {
 	public boolean remove(Long bno) {
 		
 		log.info("remove...." + bno);
-	
+		
+		replyMapper.deleteAll(bno);
+		
 		attachMapper.deleteAll(bno); // db에서 첨부파일정보 삭제
 		
 		return mapper.delete(bno) == 1;
