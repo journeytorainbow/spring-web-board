@@ -35,6 +35,7 @@
 	</bean>
 	
 	<task:annotation-driven/>
+    <context:component-scan base-package="org.donut.task"></context:component-scan>
 	<tx:annotation-driven/>
     <mybatis-spring:scan base-package="org.donut.mapper" />
     <context:component-scan base-package="org.donut.service" />
