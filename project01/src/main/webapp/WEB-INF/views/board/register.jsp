@@ -168,7 +168,10 @@ $(document).ready(function(e) {
         
         return true;
     }
-
+	
+    var csrfHeaderName ="${_csrf.headerName}"; 
+    var csrfTokenValue="${_csrf.token}";
+    
     $("input[type='file']").change(function(e) {
 
         var formData = new FormData();
@@ -192,6 +195,9 @@ $(document).ready(function(e) {
             data : formData, // 서버로 전송될 데이터
             type : 'POST',
             dataType : 'json',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+            },
             success : function(result) { // 파라미터 : json list
                 console.log(result);
 
@@ -254,6 +260,9 @@ $(document).ready(function(e) {
         $.ajax({
             url : '/deleteFile',
             data : {fileName : targetFile, type : type}, // PlainObject
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+            },
             dataType : 'text', // plain text string
             type : 'POST',
             success : function(result) {

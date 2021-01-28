@@ -281,7 +281,10 @@
 			
 			return true;
 		}
-
+		
+		var csrfHeaderName ="${_csrf.headerName}"; 
+	    var csrfTokenValue="${_csrf.token}";
+	    
 		// 새로운 첨부 파일 추가
 		$("input[type='file']").change(function(e) {
 
@@ -305,6 +308,9 @@
 				contentType : false, // 반드시 false로 지정
 				data : formData, // 서버로 전송될 데이터
 				type : 'POST',
+				beforeSend: function(xhr) {
+	                xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	            },
 				dataType : 'json',
 				success : function(result) { // 파라미터 : json list
 					console.log(result);
