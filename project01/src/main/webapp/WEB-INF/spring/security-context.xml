@@ -6,19 +6,20 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<bean id="customAccessDenied" class="org.donut.security.CustomAccessDeniedHandler" />
-	<bean id="customLoginSuccess" class="org.donut.security.CustomLoginSuccessHandler" />
+	<!-- <bean id="customLoginSuccess" class="org.donut.security.CustomLoginSuccessHandler" /> -->
 	<!-- <bean id="customPasswordEncoder" class="org.donut.security.CustomNoOpPasswordEncoder" /> -->
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<bean id="customUserDetailsService" class="org.donut.security.CustomUserDetailsService" />
 	
 	<security:http>
-	
+		
+		<!--
 		<security:intercept-url pattern="/sample/all" access="permitAll"/>
 		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
-		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')" /> -->
 		
 		<!-- <security:form-login/> -->
-		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess" />
+		<security:form-login login-page="/customLogin" />
 		<security:logout logout-url="/customLogout" invalidate-session="true" />
 		
 		<!-- <security:access-denied-handler error-page="/accessError"/> -->
