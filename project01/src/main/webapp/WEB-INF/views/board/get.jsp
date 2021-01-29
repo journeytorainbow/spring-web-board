@@ -338,7 +338,16 @@ $(document).ready(function() {
 	var modalModBtn = $("#modalModBtn");
 	var modalRemoveBtn = $("#modalRemoveBtn");
 	var modalRegisterBtn = $("#modalRegisterBtn");
-
+	
+	var replyer = null;
+	
+	<sec:authorize access="isAuthenticated()">
+		replyer = '<sec:authentication property="principal.username"/>';
+	</sec:authorize>
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
 	$("#modalCloseBtn").on("click", function(e) {
 		
 		$(".modal").modal("hide");
@@ -347,6 +356,8 @@ $(document).ready(function() {
 	$("#addReplyBtn").on("click", function(e){
 		
 		modal.find("input").val("");
+		modal.find("input[name='replyer']").val(replyer); //현재 로그인한 작성자
+		modal.find("input[name='replyer']").attr("readonly", "readonly");
 		modalInputReplyDate.closest("div").hide();
 		modal.find("button[id != 'modalCloseBtn']").hide();
 		
@@ -354,7 +365,12 @@ $(document).ready(function() {
 		
 		$(".modal").modal("show");
 	});
-
+	
+	//모든 Ajax 전송 시 CSRF토큰을 같이 전송하도록 셋팅
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	});
+	
 	modalRegisterBtn.on("click", function(e) {
 
 		var reply = {
@@ -374,8 +390,26 @@ $(document).ready(function() {
 	});
 
 	modalModBtn.on("click", function(e) {
-
-	var reply = {rno : modal.data("rno"), reply : modalInputReply.val()};
+	
+	var originalReplyer = modalInputReplyer.val();
+	
+	var reply = {rno : modal.data("rno"), 
+				reply : modalInputReply.val(),
+				replyer : originalReplyer};
+	
+	if(!replyer) {
+		alert("로그인 후 수정이 가능합니다!");
+		modal.modal("hide");
+		return;
+	}
+	
+	console.log("Original Replyer : " + originalReplyer);
+	
+	if(replyer != originalReplyer) {
+		alert("자신이 작성한 댓글만 수정이 가능합니다!");
+		modal.modal("hide");
+		return;
+	}
 
 	replyService.update(reply, function(result) {
 			alert(result);
@@ -386,14 +420,32 @@ $(document).ready(function() {
 	});
 
 	modalRemoveBtn.on("click", function(e) {
-
+	
 	var rno = modal.data("rno");
-
-	replyService.remove(rno, function(result) {
+	
+	console.log("rno : " + rno);
+	console.log("replyer : " + replyer);
+	
+	if(!replyer) {
+		alert("로그인 후 삭제가 가능합니다!");
+		modal.modal("hide");
+		return;
+	}
+	
+	var originalReplyer = modalInputReplyer.val();
+	
+	console.log("original replyer : " + originalReplyer);
+	if(replyer != originalReplyer) {
+		alert("자신이 작성한 댓글만 삭제가 가능합니다!")
+		modal.modal("hide");
+		return;
+	}
+	
+	replyService.remove(rno, originalReplyer, function(result) {
 			alert(result);
 
 			modal.modal("hide");
-			showList(pageNum);	
+			showList(pageNum);
 		});
 	});
 
@@ -403,7 +455,7 @@ $(document).ready(function() {
 
 		replyService.get(rno, function(result) {
 			modalInputReply.val(result.reply);
-			modalInputReplyer.val(result.replyer);
+			modalInputReplyer.val(result.replyer).attr("readonly", "readonly");
 			modalInputReplyDate.val(replyService.displayTime(result.replyDate))
 			.attr("readonly", "readonly");
 			modal.data("rno", result.rno);
