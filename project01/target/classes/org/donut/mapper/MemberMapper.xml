@@ -27,4 +27,9 @@
 		INSERT INTO tbl_member(userid, userpw, username) values(#{userid}, #{userpw}, #{userName})
 	</insert>
 	
+	<!-- id 중복 체크 -->
+	
+	<select id="checkId" resultType="int">
+		SELECT COUNT(*) FROM tbl_member WHERE userid = #{userid}
+	</select>
 </mapper>

@@ -48,6 +48,8 @@
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" id="userid" placeholder="Id" name="userid" type="text" autofocus>
+                                    <button class="idCheckBtn" type="button">중복체크</button>
+                                    <span class="showText" style=""></span>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" id="userpw" placeholder="Password" name="userpw" type="password" value="">
@@ -118,8 +120,61 @@
     	
     	$("form").append(str);
     	$("form").submit();
+    });
+     
+    var csrfHeaderName = "${_csrf.headerName}";
+    var csrfTokenValue = "${_csrf.token}";
+    
+    function checkId() {
+    	$.ajax({
+    		url : "/member/idCheck",
+    		type : "post",
+    		contentType : "application/json; charset=utf-8",
+    		dataType : "json",
+    		data : JSON.stringify({"userid" : userid.val()}),
+    		beforeSend : function(xhr) {
+    			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+    		},
+    		success : function(data) {
+    			console.log("checkId Ajax call");
+    			console.log("data : " + data);
+    			if(data == 1) {
+    				showNotAvailable();
+    				return false;
+    			} else if(data == 0) {
+    				showAvailable();
+    				return true;
+    			}
+    		}
+    	});
+    }
+    
+    var idCheckBtn = $(".idCheckBtn");
+    var showText = $(".showText");
+    var str = "";
+    
+    function showAvailable() {
+    	str = "사용 가능한 아이디입니다.";
+    	showText.attr("style", "color:blue");
+    	showText.html(str);
+    }
+    
+    function showNotAvailable() {
+    	str = "이미 존재하는 아이디입니다.";
+    	showText.attr("style", "color:red");
+    	showText.html(str);
+    }
+    
+    idCheckBtn.on("click", function(e) {
+    	e.preventDefault();
     	
-    	alert("회원가입 되었습니다.");
+    	if(userid.val() == "" || userid.val().match(pattern)) {
+    		alert("아이디를 입력해주세요!");
+    		userid.focus();
+    		return;
+    	}
+    	
+    	checkId();
     });
     </script>
 

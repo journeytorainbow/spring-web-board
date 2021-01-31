@@ -23,4 +23,11 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.insert(member);
 		authMapper.insert(auth);
 	}
+	
+	@Override
+	public int checkId(String userid) {
+		
+		int result = memberMapper.checkId(userid);
+		return result;
+	}
 }

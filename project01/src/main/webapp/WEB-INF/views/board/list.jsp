@@ -199,6 +199,8 @@
 			
 			searchForm.submit();
 		});
+		
+		var memResult = '<c:out value="${memResult}" />';
 	});
 </script>
            
