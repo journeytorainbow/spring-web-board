@@ -57,7 +57,7 @@
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <a href="index.html" class="btn btn-lg btn-success btn-block">Register</a>
-                                <a href="/board/list" class="btn btn-lg btn-primary btn-block">Cancel</a>
+                                <a href="/board/list" class="btn btn-lg btn-danger btn-block">Cancel</a>
                             </fieldset>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" id="role" name="auth" value="ROLE_USER" />
