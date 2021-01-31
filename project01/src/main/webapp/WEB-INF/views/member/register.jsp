@@ -88,24 +88,26 @@
     
     var role = $("#role");
     
+    // 공백 체크
+    var pattern = /\s/g;
+    
     $(".btn-success").on("click", function(e) {
-    	
     	
     	e.preventDefault();
     	
-    	if(userid.val() == "") {
+    	if(userid.val() == "" || userid.val().match(pattern)) {
     		alert("아이디를 입력해주세요!");
     		userid.focus();
     		return;
     	}
     	
-    	if(userpw.val() == "") {
+    	if(userpw.val() == "" || userpw.val().match(pattern)) {
     		alert("비밀번호를 입력해주세요!");
     		userpw.focus();
     		return;
     	}
     	
-    	if(username.val() == "") {
+    	if(username.val() == "" || username.val().match(pattern)) {
     		alert("이름을 입력해주세요!");
     		username.focus();
     		return;

@@ -47,10 +47,10 @@
                         <form role="form" method="post" action="/login">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Id" name="username" type="text" autofocus>
+                                    <input class="form-control" placeholder="Id" id="userid" name="username" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="Password" id="userpw" name="password" type="password" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
@@ -84,9 +84,21 @@
     
     <script>
     
+    var userid = $("#userid");
+    
+    var pattern = /\s/g;
+    
     $(".btn-success").on("click", function(e) {
     	
     	e.preventDefault();
+    	
+    	if(userid.val() == "" || userid.val().match(pattern)) {
+    		
+    		alert("아이디를 입력해주세요!");
+    		userid.focus();
+    		return;
+    	}
+
     	$("form").submit();
     })
     </script>
