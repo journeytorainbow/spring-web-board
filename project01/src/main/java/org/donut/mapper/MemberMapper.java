@@ -5,4 +5,5 @@ import org.donut.domain.*;
 public interface MemberMapper {
 	
 	public MemberVO read(String userid);
+	public void insert(MemberVO vo);
 }

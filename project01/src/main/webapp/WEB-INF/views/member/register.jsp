@@ -41,27 +41,26 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title">회원가입</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" method="post" action="/login">
+                        <form role="form" method="post" action="/member/register">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Id" name="username" type="text" autofocus>
+                                    <input class="form-control" id="userid" placeholder="Id" name="userid" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" id="userpw" placeholder="Password" name="userpw" type="password" value="">
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember-me" type="checkbox">Remember Me
-                                    </label>
+                                <div class="form-group">
+                                    <input class="form-control" id="username" placeholder="Name" name="userName" type="text" value="">
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
-                                <a href="/member/register" class="btn btn-lg btn-primary btn-block">Register Now</a>
+                                <a href="index.html" class="btn btn-lg btn-success btn-block">Register</a>
+                                <a href="/board/list" class="btn btn-lg btn-primary btn-block">Cancel</a>
                             </fieldset>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <input type="hidden" id="role" name="auth" value="ROLE_USER" />
                         </form>
                     </div>
                 </div>
@@ -82,12 +81,44 @@
     <script src="/resources/dist/js/sb-admin-2.js"></script>
     
     <script>
+    var str = "";
+    var userid = $("#userid");
+    var userpw = $("#userpw");
+    var username = $("#username");
+    
+    var role = $("#role");
     
     $(".btn-success").on("click", function(e) {
     	
+    	
     	e.preventDefault();
+    	
+    	if(userid.val() == "") {
+    		alert("아이디를 입력해주세요!");
+    		userid.focus();
+    		return;
+    	}
+    	
+    	if(userpw.val() == "") {
+    		alert("비밀번호를 입력해주세요!");
+    		userpw.focus();
+    		return;
+    	}
+    	
+    	if(username.val() == "") {
+    		alert("이름을 입력해주세요!");
+    		username.focus();
+    		return;
+    	}
+    	
+    	str += "<input type='hidden' name='authList[0].userid' value='" + userid.val() + "'>";
+    	str += "<input type='hidden' name='authList[0].auth' value='" + role.val() + "'>";
+    	
+    	$("form").append(str);
     	$("form").submit();
-    })
+    	
+    	alert("회원가입 되었습니다.");
+    });
     </script>
 
 </body>

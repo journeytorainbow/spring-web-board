@@ -267,6 +267,11 @@
                         <sec:authorize access="isAnonymous()">
                         <li><a href="/customLogin"><i class="fa fa-sign-out fa-fw"></i> 로그인</a>
                         </li>
+                        </li>
+                        </sec:authorize>
+                        <sec:authorize access="isAnonymous()">
+                        <li><a href="/member/register"><i class="fa fa-plus fa-fw"></i> 회원가입</a>
+                        </li>
                         </sec:authorize>
                     </ul>
                     <!-- /.dropdown-user -->
